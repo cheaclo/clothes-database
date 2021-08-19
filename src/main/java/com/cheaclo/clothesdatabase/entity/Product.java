@@ -26,4 +26,7 @@ public class Product {
     private String title;
     @ManyToMany()
     private Set<ProductCategory> categories;
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
 }

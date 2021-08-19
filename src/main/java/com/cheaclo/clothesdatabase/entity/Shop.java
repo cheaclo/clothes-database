@@ -21,6 +21,7 @@ public class Shop {
             strategy = GenerationType.SEQUENCE,
             generator = "shop_seq"
     )
+    @Column(name = "shop_id")
     private Long id;
     private String name;
 }
