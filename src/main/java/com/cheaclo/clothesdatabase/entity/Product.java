@@ -29,4 +29,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private Shop shop;
+    @ManyToOne
+    @JoinColumn(name = "product_type_id")
+    private ProductType productType;
 }
