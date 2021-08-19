@@ -24,7 +24,7 @@ public class Product {
     )
     private Long id;
     private String title;
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<ProductCategory> categories;
     @ManyToOne
     @JoinColumn(name = "shop_id")
