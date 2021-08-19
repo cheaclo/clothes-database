@@ -23,7 +23,9 @@ public class Product {
             generator = "product_seq"
     )
     private Long id;
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "product_details_id")
+    private ProductDetails details;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<ProductCategory> categories;
     @ManyToOne
@@ -31,5 +33,5 @@ public class Product {
     private Shop shop;
     @ManyToOne
     @JoinColumn(name = "product_type_id")
-    private ProductType productType;
+    private ProductType type;
 }

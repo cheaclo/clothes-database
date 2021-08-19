@@ -1,9 +1,6 @@
 package com.cheaclo.clothesdatabase.entity;
 
-import com.cheaclo.clothesdatabase.repository.ProductCategoryRepository;
-import com.cheaclo.clothesdatabase.repository.ProductRepository;
-import com.cheaclo.clothesdatabase.repository.ProductTypeRepository;
-import com.cheaclo.clothesdatabase.repository.ShopRepository;
+import com.cheaclo.clothesdatabase.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +18,17 @@ class ProductTest {
     private ShopRepository shopRepository;
     @Autowired
     private ProductTypeRepository productTypeRepository;
+    @Autowired
+    private ProductDetailsRepository productDetailsRepository;
 
     @Test
     public void getCategories() {
+        ProductDetails productDetails1 = new ProductDetails(1L, "Title 1", 12.5, 89.2, "Url 1", "Image url 1");
+        ProductDetails productDetails2 = new ProductDetails(2L, "Title 2", 9.5, 19.2, "Url 2", "Image url 2");
+
+        productDetailsRepository.save(productDetails1);
+        productDetailsRepository.save(productDetails2);
+
         ProductType woman = new ProductType(1L, "Woman");
         ProductType man = new ProductType(2L, "Man");
         ProductType kid = new ProductType(3L, "Kid");
@@ -53,9 +58,9 @@ class ProductTest {
         List<ProductCategory> categories = productCategoryRepository.findAll();
         System.out.println(categories);
 
-        Product product1 = new Product(-1L, "Title 1", Set.of(category1, category2), hm, unisex);
-        Product product2 = new Product(-1L, "Title 2", Set.of(category1, category2, category3), hm, man);
-        Product product3 = new Product(-1L, "Title 3", Set.of(category2), reserved, kid);
+        Product product1 = new Product(-1L, productDetails1, Set.of(category1, category2), hm, unisex);
+        Product product2 = new Product(-1L, productDetails1, Set.of(category1, category2, category3), hm, man);
+        Product product3 = new Product(-1L, productDetails2, Set.of(category2), reserved, kid);
 
         productRepository.save(product1);
         productRepository.save(product2);
