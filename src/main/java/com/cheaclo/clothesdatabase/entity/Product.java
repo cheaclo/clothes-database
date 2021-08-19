@@ -23,8 +23,7 @@ public class Product {
             generator = "product_seq"
     )
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "product_details_id")
+    @Embedded
     private ProductDetails details;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<ProductCategory> categories;

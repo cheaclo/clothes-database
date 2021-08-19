@@ -18,16 +18,11 @@ class ProductTest {
     private ShopRepository shopRepository;
     @Autowired
     private ProductTypeRepository productTypeRepository;
-    @Autowired
-    private ProductDetailsRepository productDetailsRepository;
 
     @Test
     public void getCategories() {
-        ProductDetails productDetails1 = new ProductDetails(1L, "Title 1", 12.5, 89.2, "Url 1", "Image url 1");
-        ProductDetails productDetails2 = new ProductDetails(2L, "Title 2", 9.5, 19.2, "Url 2", "Image url 2");
-
-        productDetailsRepository.save(productDetails1);
-        productDetailsRepository.save(productDetails2);
+        ProductDetails productDetails1 = new ProductDetails("Title 1", 12.5, 89.2, "Url 1", "Image url 1");
+        ProductDetails productDetails2 = new ProductDetails("Title 2", 9.5, 19.2, "Url 2", "Image url 2");
 
         ProductType woman = new ProductType(1L, "Woman");
         ProductType man = new ProductType(2L, "Man");

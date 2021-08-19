@@ -9,20 +9,8 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Embeddable
 public class ProductDetails {
-    @Id
-    @SequenceGenerator(
-            name = "product_details_seq",
-            sequenceName = "product_details_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "product_details_seq"
-    )
-    @Column(name = "product_details_id")
-    private Long id;
     private String title;
     private Double price;
     private Double regularPrice;
