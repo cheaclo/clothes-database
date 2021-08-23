@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class DatabaseUpdater {
+public class DatabaseRUD {
     @Autowired
     private ProductRepository productRepository;
 
@@ -30,5 +30,9 @@ public class DatabaseUpdater {
 
     public void insertProduct(Product product) {
         productRepository.save(product);
+    }
+
+    public void deleteExpiredProducts() {
+
     }
 }

@@ -2,7 +2,7 @@ package com.cheaclo.clothesdatabase.controller;
 
 import com.cheaclo.clothesdatabase.entity.Product;
 import com.cheaclo.clothesdatabase.model.ModelProduct;
-import com.cheaclo.clothesdatabase.service.DatabaseUpdater;
+import com.cheaclo.clothesdatabase.service.DatabaseRUD;
 import com.cheaclo.clothesdatabase.service.ModelParseException;
 import com.cheaclo.clothesdatabase.service.ProductParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,14 @@ public class ProductsController {
     @Autowired
     private ProductParser productParser;
     @Autowired
-    private DatabaseUpdater databaseUpdater;
+    private DatabaseRUD databaseRUD;
 
     @PostMapping("/save")
     public ProductsResponse saveProducts(@RequestBody List<ModelProduct> productModels) {
         try {
             List<Product> productEntities = productParser.modelToEntity(productModels);
-            databaseUpdater.insertAndUpdateProducts(productEntities);
+            databaseRUD.insertAndUpdateProducts(productEntities);
+            databaseRUD.deleteExpiredProducts();
             return productsResponse.success();
         } catch (ModelParseException exception) {
             return productsResponse.fail(exception.getMessage());
