@@ -12,15 +12,12 @@ public class ProductsResponse {
     @Value("${products.response.success}")
     private String successMessage;
 
-    @Value("${products.response.fail}")
-    private String failMessage;
-
     public boolean success;
     public String message;
 
-    public ProductsResponse fail() {
+    public ProductsResponse fail(String errorMessage) {
         success = false;
-        message = failMessage;
+        message = errorMessage;
         return this;
     }
 
