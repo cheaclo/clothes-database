@@ -8,10 +8,7 @@ import com.cheaclo.clothesdatabase.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class ProductParser {
@@ -47,7 +44,9 @@ public class ProductParser {
             if (type == null)
                 throw new ModelParseException("Cannot find type '" + model.getType() + "' in database");
 
-            entityProducts.add(new Product(-1L, productDetails, categories, shop, type));
+            Product product = new Product(productDetails, categories, shop, type, new Date());
+            product.setHash(product.hashCode());
+            entityProducts.add(product);
         }
         return entityProducts;
     }
