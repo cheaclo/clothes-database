@@ -2,9 +2,14 @@ package com.cheaclo.clothesdatabase.repository;
 
 import com.cheaclo.clothesdatabase.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findFirstByHash(Integer hash);
+    @Modifying
+    void deleteByLastUpdateBefore(Date expiryDate);
 }
