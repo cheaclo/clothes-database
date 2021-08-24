@@ -8,5 +8,6 @@ import java.util.List;
 public class ProductsSaveRequest {
     private String senderName;
     private String authenticationCode;
+    private String shopName;
     List<ModelProduct> products;
 }

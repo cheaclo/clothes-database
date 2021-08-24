@@ -20,7 +20,7 @@ public class ProductParser {
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
 
-    public List<Product> modelToEntity(List<ModelProduct> modelProducts) throws ModelParseException{
+    public List<Product> modelToEntity(List<ModelProduct> modelProducts, String shopName) throws ModelParseException{
         List<Product> entityProducts = new ArrayList<>();
         for (ModelProduct model : modelProducts) {
             ProductDetails productDetails = new ProductDetails(model.getTitle(),
@@ -37,9 +37,9 @@ public class ProductParser {
                 categories.add(category);
             }
 
-            Shop shop = shopRepository.findFirstByNameIgnoreCase(model.getShop());
+            Shop shop = shopRepository.findFirstByNameIgnoreCase(shopName);
             if (shop == null)
-                throw new ModelParseException("Cannot find shop '" + model.getShop() + "' in database");
+                throw new ModelParseException("Cannot find shop '" + shopName + "' in database");
 
             ProductType type = productTypeRepository.findFirstByNameIgnoreCase(model.getType());
             if (type == null)

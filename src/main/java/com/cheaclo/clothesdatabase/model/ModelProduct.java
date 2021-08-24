@@ -13,5 +13,4 @@ public class ModelProduct {
     private String imageUrl;
     private List<String> categories;
     private String type;
-    private String shop;
 }

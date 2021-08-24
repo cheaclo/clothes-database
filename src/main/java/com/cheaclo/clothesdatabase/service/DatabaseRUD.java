@@ -1,10 +1,11 @@
 package com.cheaclo.clothesdatabase.service;
 
 import com.cheaclo.clothesdatabase.entity.Product;
+import com.cheaclo.clothesdatabase.entity.Shop;
 import com.cheaclo.clothesdatabase.repository.ProductRepository;
+import com.cheaclo.clothesdatabase.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,8 @@ public class DatabaseRUD {
     private final int MILISECOND_PER_MINUTE = 60000;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ShopRepository shopRepository;
     @Value("${products.expiration.minutes}")
     private int expirationMinutes;
 
@@ -39,8 +42,12 @@ public class DatabaseRUD {
         productRepository.save(product);
     }
 
-    public void deleteExpiredProducts() {
+    public void deleteExpiredProducts(String shopName) throws ModelParseException {
+        Shop shop = shopRepository.findFirstByNameIgnoreCase(shopName);
+        if (shop == null)
+            throw new ModelParseException("Cannot find shop '" + shopName + "' in database");
+
         Date expiryDate = new Date(System.currentTimeMillis() - expirationMinutes * MILISECOND_PER_MINUTE);
-        productRepository.deleteByLastUpdateBefore(expiryDate);
+        productRepository.deleteByShopIdAndLastUpdateBefore(shop.getId(), expiryDate);
     }
 }

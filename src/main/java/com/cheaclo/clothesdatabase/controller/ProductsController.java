@@ -34,11 +34,12 @@ public class ProductsController {
             return productsResponse.fail(senderAuthenticationFailed);
 
         List<ModelProduct> productModels = request.getProducts();
+        String shopName = request.getShopName();
 
         try {
-            List<Product> productEntities = productParser.modelToEntity(productModels);
+            List<Product> productEntities = productParser.modelToEntity(productModels, shopName);
             databaseRUD.insertAndUpdateProducts(productEntities);
-            databaseRUD.deleteExpiredProducts();
+            databaseRUD.deleteExpiredProducts(shopName);
             return productsResponse.success();
         } catch (ModelParseException exception) {
             return productsResponse.fail(exception.getMessage());
