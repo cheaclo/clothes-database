@@ -5,12 +5,13 @@ import com.cheaclo.clothesdatabase.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
-@Component
+@Service
 @Transactional
 public class DatabaseRUD {
     private final int MILISECOND_PER_MINUTE = 60000;

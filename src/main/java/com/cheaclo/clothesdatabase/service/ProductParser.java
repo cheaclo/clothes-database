@@ -7,10 +7,11 @@ import com.cheaclo.clothesdatabase.repository.ProductTypeRepository;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Component
+@Service
 public class ProductParser {
     @Autowired
     private ShopRepository shopRepository;
