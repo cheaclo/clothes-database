@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class ProductsSaveRequest {
-    private String sender;
+    private String senderName;
     private String authenticationCode;
     List<ModelProduct> products;
 }

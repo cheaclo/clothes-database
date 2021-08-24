@@ -30,7 +30,7 @@ public class ProductsController {
 
     @PostMapping("/save")
     public ProductsResponse saveProducts(@RequestBody ProductsSaveRequest request) {
-        if (!senderAuthentication.authenticateSender(request.getSender(), request.getAuthenticationCode()))
+        if (!senderAuthentication.authenticateSender(request.getSenderName(), request.getAuthenticationCode()))
             return productsResponse.fail(senderAuthenticationFailed);
 
         List<ModelProduct> productModels = request.getProducts();
