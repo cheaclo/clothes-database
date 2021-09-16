@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 public class DatabaseRUD {
-    private final int MILISECOND_PER_MINUTE = 60000;
+    private final long MILISECOND_PER_MINUTE = 60000;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
