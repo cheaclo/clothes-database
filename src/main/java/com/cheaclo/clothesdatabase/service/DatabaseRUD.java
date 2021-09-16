@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 public class DatabaseRUD {
-    private final long MILISECOND_PER_MINUTE = 60000;
+    private final long MILLISECOND_PER_MINUTE = 60000;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -47,7 +47,7 @@ public class DatabaseRUD {
         if (shop == null)
             throw new ModelParseException("Cannot find shop '" + shopName + "' in database");
 
-        Date expiryDate = new Date(System.currentTimeMillis() - expirationMinutes * MILISECOND_PER_MINUTE);
+        Date expiryDate = new Date(System.currentTimeMillis() - expirationMinutes * MILLISECOND_PER_MINUTE);
         productRepository.deleteByShopIdAndLastUpdateBefore(shop.getId(), expiryDate);
     }
 }
