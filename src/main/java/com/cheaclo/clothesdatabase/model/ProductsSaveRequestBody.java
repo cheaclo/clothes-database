@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProductsSaveRequest {
+public class ProductsSaveRequestBody {
     private String senderName;
     private String authenticationCode;
     private String shopName;

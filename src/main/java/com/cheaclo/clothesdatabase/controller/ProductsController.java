@@ -2,7 +2,7 @@ package com.cheaclo.clothesdatabase.controller;
 
 import com.cheaclo.clothesdatabase.entity.Product;
 import com.cheaclo.clothesdatabase.model.ModelProduct;
-import com.cheaclo.clothesdatabase.model.ProductsSaveRequest;
+import com.cheaclo.clothesdatabase.model.ProductsSaveRequestBody;
 import com.cheaclo.clothesdatabase.service.DatabaseRUD;
 import com.cheaclo.clothesdatabase.service.ModelParseException;
 import com.cheaclo.clothesdatabase.service.ProductParser;
@@ -29,7 +29,7 @@ public class ProductsController {
     private String senderAuthenticationFailed;
 
     @PostMapping("/save")
-    public ProductsResponse saveProducts(@RequestBody ProductsSaveRequest request) {
+    public ProductsResponse saveProducts(@RequestBody ProductsSaveRequestBody request) {
         if (!senderAuthentication.authenticateSender(request.getSenderName(), request.getAuthenticationCode()))
             return productsResponse.fail(senderAuthenticationFailed);
 
