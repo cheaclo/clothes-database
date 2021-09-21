@@ -1,5 +1,6 @@
 package com.cheaclo.clothesdatabase.controller;
 
+import com.cheaclo.clothesdatabase.service.SaveProductControllerResponse;
 import com.cheaclo.clothesdatabase.entity.Product;
 import com.cheaclo.clothesdatabase.model.ModelProduct;
 import com.cheaclo.clothesdatabase.model.ProductsSaveRequestBody;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 public class SaveProductController {
     @Autowired
-    private ProductsResponse productsResponse;
+    private SaveProductControllerResponse saveProductControllerResponse;
     @Autowired
     private ProductParser productParser;
     @Autowired
@@ -29,9 +30,9 @@ public class SaveProductController {
     private String senderAuthenticationFailed;
 
     @PostMapping("/save")
-    public ProductsResponse saveProducts(@RequestBody ProductsSaveRequestBody request) {
+    public SaveProductControllerResponse saveProducts(@RequestBody ProductsSaveRequestBody request) {
         if (!senderAuthentication.authenticateSender(request.getSenderName(), request.getAuthenticationCode()))
-            return productsResponse.fail(senderAuthenticationFailed);
+            return saveProductControllerResponse.fail(senderAuthenticationFailed);
 
         List<ModelProduct> productModels = request.getProducts();
         String shopName = request.getShopName();
@@ -40,9 +41,9 @@ public class SaveProductController {
             List<Product> productEntities = productParser.modelToEntity(productModels, shopName);
             databaseRUD.insertAndUpdateProducts(productEntities);
             databaseRUD.deleteExpiredProducts(shopName);
-            return productsResponse.success();
+            return saveProductControllerResponse.success();
         } catch (ModelParseException exception) {
-            return productsResponse.fail(exception.getMessage());
+            return saveProductControllerResponse.fail(exception.getMessage());
         }
     }
 }
