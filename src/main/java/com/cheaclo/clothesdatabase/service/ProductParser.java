@@ -1,7 +1,7 @@
 package com.cheaclo.clothesdatabase.service;
 
 import com.cheaclo.clothesdatabase.entity.*;
-import com.cheaclo.clothesdatabase.model.ModelProduct;
+import com.cheaclo.clothesdatabase.model.request.ProductRequestBody;
 import com.cheaclo.clothesdatabase.repository.ProductCategoryRepository;
 import com.cheaclo.clothesdatabase.repository.ProductTypeRepository;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
@@ -17,12 +17,12 @@ public class ProductParser {
     private final ProductTypeRepository productTypeRepository;
     private final ProductCategoryRepository productCategoryRepository;
 
-    public List<Product> modelToEntity(List<ModelProduct> modelProducts, String shopName) throws ModelParseException{
+    public List<Product> modelToEntity(List<ProductRequestBody> modelProducts, com.cheaclo.clothesdatabase.model.Shop shop) throws ModelParseException{
         List<Product> entityProducts = new ArrayList<>();
-        for (ModelProduct model : modelProducts) {
+        for (ProductRequestBody model : modelProducts) {
             ProductDetails productDetails = new ProductDetails(model.getTitle(),
-                    extractDouble(model.getPrice()),
-                    extractDouble(model.getRegularPrice()),
+                    model.getPrice(),
+                    model.getRegularPrice(),
                     model.getProductUrl(),
                     model.getImageUrl());
 
@@ -34,26 +34,18 @@ public class ProductParser {
                 categories.add(category);
             }
 
-            Shop shop = shopRepository.findFirstByNameIgnoreCase(shopName);
-            if (shop == null)
-                throw new ModelParseException("Cannot find shop '" + shopName + "' in database");
+            Shop selectedShop = shopRepository.findFirstByNameIgnoreCase(shop.toString());
+            if (selectedShop == null)
+                throw new ModelParseException("Cannot find shop '" + shop + "' in database");
 
-            ProductType type = productTypeRepository.findFirstByNameIgnoreCase(model.getType());
+            ProductType type = productTypeRepository.findFirstByNameIgnoreCase(model.getType().toString());
             if (type == null)
                 throw new ModelParseException("Cannot find type '" + model.getType() + "' in database");
 
-            Product product = new Product(productDetails, categories, shop, type, new Date());
+            Product product = new Product(productDetails, categories, selectedShop, type, new Date());
             product.setHash(product.hashCode());
             entityProducts.add(product);
         }
         return entityProducts;
-    }
-
-    private double extractDouble(String arg) throws ModelParseException{
-        try {
-            return Double.parseDouble(arg);
-        } catch(Exception e) {
-            throw new ModelParseException("Cannot parse value '" + arg + "' to double");
-        }
     }
 }

@@ -44,12 +44,12 @@ public class DatabaseRUD {
         productRepository.save(product);
     }
 
-    public void deleteExpiredProducts(String shopName) throws ModelParseException {
-        Shop shop = shopRepository.findFirstByNameIgnoreCase(shopName);
-        if (shop == null)
-            throw new ModelParseException("Cannot find shop '" + shopName + "' in database");
+    public void deleteExpiredProducts(com.cheaclo.clothesdatabase.model.Shop shop) throws ModelParseException {
+        Shop selectedShop = shopRepository.findFirstByNameIgnoreCase(shop.toString());
+        if (selectedShop == null)
+            throw new ModelParseException("Cannot find shop '" + shop + "' in database");
 
         Date expiryDate = new Date(System.currentTimeMillis() - expirationMinutes * MILLISECOND_PER_MINUTE);
-        productRepository.deleteByShopIdAndLastUpdateBefore(shop.getId(), expiryDate);
+        productRepository.deleteByShopIdAndLastUpdateBefore(selectedShop.getId(), expiryDate);
     }
 }

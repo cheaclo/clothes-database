@@ -1,12 +1,12 @@
 package com.cheaclo.clothesdatabase.controller;
 
 import com.cheaclo.clothesdatabase.entity.Product;
-import com.cheaclo.clothesdatabase.model.ModelProduct;
-import com.cheaclo.clothesdatabase.model.ProductsSaveRequestBody;
+import com.cheaclo.clothesdatabase.model.Shop;
+import com.cheaclo.clothesdatabase.model.request.ProductRequestBody;
+import com.cheaclo.clothesdatabase.model.request.SaveProductsRequestBody;
 import com.cheaclo.clothesdatabase.service.*;
 import com.cheaclo.clothesdatabase.service.response.SaveProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,17 +25,17 @@ public class SaveProductController {
     private final SenderAuthentication senderAuthentication;
 
     @PostMapping("/save")
-    public ResponseEntity<SaveProductResponse> saveProducts(@RequestBody ProductsSaveRequestBody request) {
+    public ResponseEntity<SaveProductResponse> saveProducts(@RequestBody SaveProductsRequestBody request) {
         if (!senderAuthentication.authenticateSender(request.getSenderName(), request.getAuthenticationCode()))
             return ResponseEntity.badRequest().body(saveProductResponse.authenticationFailed());
 
-        List<ModelProduct> productModels = request.getProducts();
-        String shopName = request.getShopName();
+        List<ProductRequestBody> productModels = request.getProducts();
+        Shop shop = request.getShop();
 
         try {
-            List<Product> productEntities = productParser.modelToEntity(productModels, shopName);
+            List<Product> productEntities = productParser.modelToEntity(productModels, shop);
             databaseRUD.insertAndUpdateProducts(productEntities);
-            databaseRUD.deleteExpiredProducts(shopName);
+            databaseRUD.deleteExpiredProducts(shop);
             return ResponseEntity.ok(saveProductResponse.success());
         } catch (ModelParseException exception) {
             return ResponseEntity.badRequest().body(saveProductResponse.fail(exception.getMessage()));
