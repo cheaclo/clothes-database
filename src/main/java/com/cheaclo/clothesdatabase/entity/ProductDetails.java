@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Data
@@ -12,10 +14,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @Embeddable
 public class ProductDetails {
+    @NotNull
+    @Size(min=2, max=30)
     private String title;
+
+    @NotNull
     private Double price;
+
+    @NotNull
     private Double regularPrice;
+
+    @NotNull
     private String productUrl;
+
+    @NotNull
     private String imageUrl;
 
     @Override

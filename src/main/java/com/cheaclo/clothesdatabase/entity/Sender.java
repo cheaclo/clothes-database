@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -21,8 +23,14 @@ public class Sender {
             strategy = GenerationType.SEQUENCE,
             generator = "sender_seq"
     )
+    @NotNull
     @Column(name = "shop_id")
     private Long id;
+
+    @NotNull
+    @Size(min=2, max=100)
     private String name;
+
+    @NotNull
     private String authenticationCode;
 }

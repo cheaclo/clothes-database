@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +23,11 @@ public class ProductType {
             strategy = GenerationType.SEQUENCE,
             generator = "product_type_seq"
     )
+    @NotNull
     @Column(name = "product_type_id")
     private Long id;
+
+    @NotNull
+    @Size(min=2, max=50)
     private String name;
 }
