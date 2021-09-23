@@ -27,10 +27,10 @@ public class ProductParser {
                     model.getImageUrl());
 
             Set<ProductCategory> categories = new HashSet<>();
-            for (String modelCategory : model.getCategories()) {
-                ProductCategory category = productCategoryRepository.findFirstByNameIgnoreCase(modelCategory);
+            for (com.cheaclo.clothesdatabase.model.ProductCategory requestCategory : model.getCategories()) {
+                ProductCategory category = productCategoryRepository.findFirstByNameIgnoreCase(requestCategory.toString());
                 if (category == null)
-                    throw new ModelParseException("Cannot find category '" + modelCategory + "' in database");
+                    throw new ModelParseException("Cannot find category '" + requestCategory + "' in database");
                 categories.add(category);
             }
 

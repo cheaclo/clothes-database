@@ -1,5 +1,6 @@
 package com.cheaclo.clothesdatabase.model.request;
 
+import com.cheaclo.clothesdatabase.model.ProductCategory;
 import com.cheaclo.clothesdatabase.model.ProductType;
 import lombok.Data;
 
@@ -26,7 +27,7 @@ public class ProductRequestBody {
     private String imageUrl;
 
     @NotNull
-    private List<String> categories;
+    private List<ProductCategory> categories;
 
     @NotNull
     private ProductType type;
