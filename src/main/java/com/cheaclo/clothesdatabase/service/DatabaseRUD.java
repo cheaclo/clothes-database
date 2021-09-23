@@ -4,7 +4,7 @@ import com.cheaclo.clothesdatabase.entity.Product;
 import com.cheaclo.clothesdatabase.entity.Shop;
 import com.cheaclo.clothesdatabase.repository.ProductRepository;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +14,16 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class DatabaseRUD {
     private final long MILLISECOND_PER_MINUTE = 60000;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ShopRepository shopRepository;
+
     @Value("${products.expiration.minutes}")
     private int expirationMinutes;
+
+    private final ProductRepository productRepository;
+    private final ShopRepository shopRepository;
+
 
     public void insertAndUpdateProducts(List<Product> products) {
         for (Product product : products) {

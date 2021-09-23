@@ -4,27 +4,23 @@ import com.cheaclo.clothesdatabase.entity.ProductCategory;
 import com.cheaclo.clothesdatabase.entity.ProductType;
 import com.cheaclo.clothesdatabase.entity.Shop;
 import com.cheaclo.clothesdatabase.repository.ProductCategoryRepository;
-import com.cheaclo.clothesdatabase.repository.ProductRepository;
 import com.cheaclo.clothesdatabase.repository.ProductTypeRepository;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
+@RequiredArgsConstructor
 public class InitDatabase {
     @Value("${database.init}")
     private boolean initDatabase;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductCategoryRepository productCategoryRepository;
-    @Autowired
-    private ShopRepository shopRepository;
-    @Autowired
-    private ProductTypeRepository productTypeRepository;
+
+    private final ProductCategoryRepository productCategoryRepository;
+    private final ShopRepository shopRepository;
+    private final ProductTypeRepository productTypeRepository;
 
     @PostConstruct
     public void postConstruct() {

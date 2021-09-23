@@ -5,19 +5,17 @@ import com.cheaclo.clothesdatabase.model.ModelProduct;
 import com.cheaclo.clothesdatabase.repository.ProductCategoryRepository;
 import com.cheaclo.clothesdatabase.repository.ProductTypeRepository;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ProductParser {
-    @Autowired
-    private ShopRepository shopRepository;
-    @Autowired
-    private ProductTypeRepository productTypeRepository;
-    @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    private final ShopRepository shopRepository;
+    private final ProductTypeRepository productTypeRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
     public List<Product> modelToEntity(List<ModelProduct> modelProducts, String shopName) throws ModelParseException{
         List<Product> entityProducts = new ArrayList<>();

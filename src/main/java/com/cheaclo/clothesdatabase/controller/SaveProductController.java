@@ -1,14 +1,10 @@
 package com.cheaclo.clothesdatabase.controller;
 
-import com.cheaclo.clothesdatabase.service.SaveProductControllerResponse;
 import com.cheaclo.clothesdatabase.entity.Product;
 import com.cheaclo.clothesdatabase.model.ModelProduct;
 import com.cheaclo.clothesdatabase.model.ProductsSaveRequestBody;
-import com.cheaclo.clothesdatabase.service.DatabaseRUD;
-import com.cheaclo.clothesdatabase.service.ModelParseException;
-import com.cheaclo.clothesdatabase.service.ProductParser;
-import com.cheaclo.clothesdatabase.service.SenderAuthentication;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cheaclo.clothesdatabase.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,18 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/product")
 public class SaveProductController {
-    @Autowired
-    private SaveProductControllerResponse saveProductControllerResponse;
-    @Autowired
-    private ProductParser productParser;
-    @Autowired
-    private DatabaseRUD databaseRUD;
-    @Autowired
-    private SenderAuthentication senderAuthentication;
     @Value("${sender.authentication.fail}")
     private String senderAuthenticationFailed;
+
+    private final SaveProductControllerResponse saveProductControllerResponse;
+    private final ProductParser productParser;
+    private final DatabaseRUD databaseRUD;
+    private final SenderAuthentication senderAuthentication;
 
     @PostMapping("/save")
     public SaveProductControllerResponse saveProducts(@RequestBody ProductsSaveRequestBody request) {

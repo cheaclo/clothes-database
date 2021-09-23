@@ -2,13 +2,13 @@ package com.cheaclo.clothesdatabase.service;
 
 import com.cheaclo.clothesdatabase.entity.Sender;
 import com.cheaclo.clothesdatabase.repository.SenderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class SenderAuthentication {
-    @Autowired
-    private SenderRepository senderRepository;
+    private final SenderRepository senderRepository;
 
     public boolean authenticateSender(String name, String code) {
         Sender sender = senderRepository.findFirstByNameIgnoreCase(name);
