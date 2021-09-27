@@ -1,0 +1,1 @@
+INSERT INTO shop (shop_id, name) VALUES(1, 'MANGO')

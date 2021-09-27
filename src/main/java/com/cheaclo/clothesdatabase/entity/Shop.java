@@ -25,7 +25,6 @@ public class Shop {
     )
     @NotNull
     @Column(name = "shop_id")
-
     @NotNull
     private Long id;
 
