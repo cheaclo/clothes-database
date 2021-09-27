@@ -24,7 +24,7 @@ public class Sender {
             generator = "sender_seq"
     )
     @NotNull
-    @Column(name = "shop_id")
+    @Column(name = "sender_id")
     private Long id;
 
     @NotNull
