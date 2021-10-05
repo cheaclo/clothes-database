@@ -1,23 +1,31 @@
 package com.cheaclo.clothesdatabase.controller;
 
+import com.cheaclo.clothesdatabase.entity.Shop;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/shop")
 public class ShopController {
-    @Autowired
     private ShopRepository shopRepository;
 
     @CrossOrigin
     @GetMapping("/all")
     public List<String> getAllShopsName() {
         return shopRepository.findAllOnlyName();
+    }
+
+    @GetMapping("/match")
+    public List<String> getShopsBySubstring(@RequestParam(name = "value") String value) {
+        List<Shop> shops = shopRepository.findAllByNameContainingIgnoreCase(value);
+        List<String> shopsNames = new LinkedList<>();
+        for (Shop shop : shops)
+            shopsNames.add(shop.getName());
+        return shopsNames;
     }
 }
