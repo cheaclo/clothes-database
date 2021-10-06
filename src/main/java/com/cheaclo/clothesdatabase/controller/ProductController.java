@@ -23,7 +23,7 @@ public class ProductController {
         return productRepository.findAllByNameAndShop(value, splitShops);
     }
 
-    @GetMapping("/match/5")
+    @GetMapping("/match/five")
     public List<Product> getFirstFiveProductsByNameAndShops(@RequestParam String value,
                                                             @RequestParam String shops) {
         return getProductsByNameAndShops(value, shops).subList(0, 5);
