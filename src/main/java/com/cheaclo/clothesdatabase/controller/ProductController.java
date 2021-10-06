@@ -22,4 +22,10 @@ public class ProductController {
         List<String> splitShops = List.of(shops.split(","));
         return productRepository.findAllByNameAndShop(value, splitShops);
     }
+
+    @GetMapping("/match/5")
+    public List<Product> getFirstFiveProductsByNameAndShops(@RequestParam String value,
+                                                            @RequestParam String shops) {
+        return getProductsByNameAndShops(value, shops).subList(0, 5);
+    }
 }

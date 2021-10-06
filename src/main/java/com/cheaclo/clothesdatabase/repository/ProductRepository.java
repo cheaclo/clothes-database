@@ -19,6 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * " +
             "from product " +
             "where lower(title) like CONCAT('%', lower(:title), '%') and shop_id in\n" +
-            "                                              (select shop_id from shop where lower(name) in (:shops))", nativeQuery = true)
+            "                                              (select shop_id from shop where lower(name) in (:shops))" +
+            "order by title", nativeQuery = true)
     List<Product> findAllByNameAndShop(String title, List<String> shops);
 }
