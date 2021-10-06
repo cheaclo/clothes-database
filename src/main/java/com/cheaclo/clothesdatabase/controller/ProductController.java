@@ -26,6 +26,9 @@ public class ProductController {
     @GetMapping("/match/five")
     public List<Product> getFirstFiveProductsByNameAndShops(@RequestParam String value,
                                                             @RequestParam String shops) {
-        return getProductsByNameAndShops(value, shops).subList(0, 5);
+        List<Product> products = getProductsByNameAndShops(value, shops);
+        if (products.size() >= 5)
+            return products.subList(0, 5);
+        return products;
     }
 }
