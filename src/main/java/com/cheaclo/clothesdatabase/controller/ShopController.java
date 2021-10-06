@@ -14,15 +14,14 @@ import java.util.List;
 public class ShopController {
     private ShopRepository shopRepository;
 
-    @CrossOrigin
     @GetMapping("/all")
     public List<String> getAllShopsName() {
         return shopRepository.findAllOnlyName();
     }
 
     @GetMapping("/match")
-    public List<String> getShopsBySubstring(@RequestParam(name = "value") String value) {
-        List<Shop> shops = shopRepository.findAllByNameContainingIgnoreCase(value);
+    public List<String> getShopsBySubstring(@RequestParam String value) {
+        List<Shop> shops = shopRepository.findAllByNameStartsWithIgnoreCase(value);
         List<String> shopsNames = new LinkedList<>();
         for (Shop shop : shops)
             shopsNames.add(shop.getName());

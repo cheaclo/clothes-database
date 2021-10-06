@@ -14,5 +14,5 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
     @Query(value = "select name from shop", nativeQuery = true)
     List<String> findAllOnlyName();
 
-    List<Shop> findAllByNameContainingIgnoreCase(String name);
+    List<Shop> findAllByNameStartsWithIgnoreCase(String name);
 }
