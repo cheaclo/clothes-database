@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/shop")
+@RequestMapping("/clothes/shop")
 public class ShopController {
     private ShopRepository shopRepository;
 

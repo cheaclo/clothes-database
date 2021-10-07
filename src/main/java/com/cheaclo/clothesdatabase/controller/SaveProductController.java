@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/clothes/product")
 public class SaveProductController {
     private final SaveProductResponse saveProductResponse;
     private final ProductParser productParser;
