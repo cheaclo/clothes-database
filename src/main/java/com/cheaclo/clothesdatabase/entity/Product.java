@@ -53,10 +53,10 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return details.equals(product.details) && categories.equals(product.categories) && shop.equals(product.shop) && type.equals(product.type);
-    }
+    }   //13,322
 
     @Override
     public int hashCode() {
-        return Objects.hash(details, shop, type);
+        return Objects.hash(details, categories, shop, type);
     }
 }
