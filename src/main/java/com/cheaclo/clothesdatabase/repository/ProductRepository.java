@@ -22,4 +22,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "                                              (select shop_id from shop where lower(name) in (:shops))" +
             "order by title", nativeQuery = true)
     List<Product> findAllByNameAndShop(String title, List<String> shops);
+
+    @Query(value = "select *" +
+            "from product " +
+            "where product_type_id=:typeId", nativeQuery = true)
+    List<Product> findAllByType(Long typeId);
 }

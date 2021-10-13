@@ -25,7 +25,7 @@ public class CategoryController {
     public List<CategoryResponse> getCategoriesByType(@RequestParam String type) {
         ProductType productType = productTypeRepository.findFirstByNameIgnoreCase(type);
         if (productType == null)
-            return null;
+            return List.of();
 
         List<ProductCategory> allCategories = productCategoryRepository.findAll();
         List<CategoryResponse> categoryResponses = new LinkedList<>();
