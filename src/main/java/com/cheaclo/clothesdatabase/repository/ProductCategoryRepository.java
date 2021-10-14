@@ -11,8 +11,17 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
     @Query(value = "select count(*)\n" +
             "from product_categories\n" +
-            "where categories_id=:category_id and product_id in (\n" +
-            "        select id from product where product_type_id=:type_id\n" +
+            "where categories_id=:categoryId and product_id in (\n" +
+            "        select id from product where product_type_id=:typeId\n" +
             "    )", nativeQuery = true)
-    Long countByCategoryIdAndTypeId(Long category_id, Long type_id);
+    Long countByCategoryIdAndTypeId(Long categoryId, Long typeId);
+
+    @Query(value = "select count(*)\n" +
+            "from product_categories\n" +
+            "where categories_id=:categoryId " +
+            "and product_id in (\n" +
+            "        select id from product " +
+            "        where product_type_id=:typeId and shop_id=:shopId\n" +
+            "    )", nativeQuery = true)
+    Long countByCategoryIdAndTypeIdAndShopId(Long categoryId, Long typeId,  Long shopId);
 }
