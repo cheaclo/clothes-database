@@ -36,5 +36,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     "    where categories_id=:categoryId)", nativeQuery = true)
     List<Product> findAllByTypeAndCategories(Long typeId, Long categoryId);
 
+    @Query(value = "select *\n" +
+            "from product\n" +
+            "where product_type_id=:typeId and shop_id=:shopId\n" +
+            "and id in (\n" +
+            "    select product_id\n" +
+            "    from product_categories\n" +
+            "    where categories_id=:categoryId)", nativeQuery = true)
+    List<Product> findAllByShopAndTypeAndCategories(Long shopId, Long typeId, Long categoryId);
+
     List<Product> findAllByShopId(Long shopId);
 }

@@ -73,4 +73,24 @@ public class ProductController {
 
         return productRepository.findAllByShopId(shop.getId());
     }
+
+    @GetMapping("/by-shop-type-and-category")
+    public List<Product> getAllProductsByShopAndTypeAndCategory(@RequestParam String shopName,
+                                                                 @RequestParam String type,
+                                                                 @RequestParam String category) {
+        ProductType productType = productTypeRepository.findFirstByNameIgnoreCase(type);
+        if (productType == null)
+            return List.of();
+
+        ProductCategory productCategory = productCategoryRepository.findFirstByNameIgnoreCase(category);
+        if (productCategory == null)
+            return List.of();
+
+        Shop shop = shopRepository.findFirstByNameIgnoreCase(shopName);
+        if (shop == null)
+            List.of();
+
+        List<Product> products = productRepository.findAllByShopAndTypeAndCategories(shop.getId(), productType.getId(), productCategory.getId());
+        return products;
+    }
 }
