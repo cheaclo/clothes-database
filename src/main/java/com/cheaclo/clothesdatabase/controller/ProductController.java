@@ -1,8 +1,10 @@
 package com.cheaclo.clothesdatabase.controller;
 
 import com.cheaclo.clothesdatabase.entity.Product;
+import com.cheaclo.clothesdatabase.entity.ProductCategory;
 import com.cheaclo.clothesdatabase.entity.ProductType;
 import com.cheaclo.clothesdatabase.entity.Shop;
+import com.cheaclo.clothesdatabase.repository.ProductCategoryRepository;
 import com.cheaclo.clothesdatabase.repository.ProductRepository;
 import com.cheaclo.clothesdatabase.repository.ProductTypeRepository;
 import com.cheaclo.clothesdatabase.repository.ShopRepository;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ProductController {
     private ProductRepository productRepository;
     private ProductTypeRepository productTypeRepository;
+    private ProductCategoryRepository productCategoryRepository;
 
     @GetMapping("/match")
     public List<Product> getProductsByNameAndShops(@RequestParam String value,
@@ -35,13 +38,29 @@ public class ProductController {
         return products;
     }
 
-    @GetMapping("/byType")
+    @GetMapping("/by-type")
     public List<Product> getAllProductsByType(@RequestParam String type) {
         ProductType productType = productTypeRepository.findFirstByNameIgnoreCase(type);
         if (productType == null)
             return List.of();
 
         List<Product> products = productRepository.findAllByType(productType.getId());
+        return products;
+    }
+
+
+    @GetMapping("/by-type-and-category")
+    public List<Product> getAllProductsByTypeAndCateogry(@RequestParam String type,
+                                                         @RequestParam String category) {
+        ProductType productType = productTypeRepository.findFirstByNameIgnoreCase(type);
+        if (productType == null)
+            return List.of();
+
+        ProductCategory productCategory = productCategoryRepository.findFirstByNameIgnoreCase(category);
+        if (productCategory == null)
+            return List.of();
+
+        List<Product> products = productRepository.findAllByTypeAndCategories(productType.getId(), productCategory.getId());
         return products;
     }
 }
