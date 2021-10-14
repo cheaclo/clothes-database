@@ -21,6 +21,7 @@ public class ProductController {
     private ProductRepository productRepository;
     private ProductTypeRepository productTypeRepository;
     private ProductCategoryRepository productCategoryRepository;
+    private ShopRepository shopRepository;
 
     @GetMapping("/match")
     public List<Product> getProductsByNameAndShops(@RequestParam String value,
@@ -50,7 +51,7 @@ public class ProductController {
 
 
     @GetMapping("/by-type-and-category")
-    public List<Product> getAllProductsByTypeAndCateogry(@RequestParam String type,
+    public List<Product> getAllProductsByTypeAndCategory(@RequestParam String type,
                                                          @RequestParam String category) {
         ProductType productType = productTypeRepository.findFirstByNameIgnoreCase(type);
         if (productType == null)
@@ -62,5 +63,14 @@ public class ProductController {
 
         List<Product> products = productRepository.findAllByTypeAndCategories(productType.getId(), productCategory.getId());
         return products;
+    }
+
+    @GetMapping("/by-shop")
+    public List<Product> getAllProductsByShop(@RequestParam String shopName) {
+        Shop shop = shopRepository.findFirstByNameIgnoreCase(shopName);
+        if (shop == null)
+            List.of();
+
+        return productRepository.findAllByShopId(shop.getId());
     }
 }

@@ -35,4 +35,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     "    from product_categories\n" +
                     "    where categories_id=:categoryId)", nativeQuery = true)
     List<Product> findAllByTypeAndCategories(Long typeId, Long categoryId);
+
+    List<Product> findAllByShopId(Long shopId);
 }
