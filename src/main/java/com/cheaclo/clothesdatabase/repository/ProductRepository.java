@@ -4,7 +4,6 @@ import com.cheaclo.clothesdatabase.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -12,7 +11,11 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    @Query(value = "select * from product where id in (:ids)", nativeQuery = true)
+    List<Product> findAllByIds(List<Long> ids);
+
     Product findFirstByHash(Integer hash);
+
     @Modifying
     void deleteByShopIdAndLastUpdateBefore(Long shopId, Date expiryDate);
 

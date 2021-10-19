@@ -23,6 +23,11 @@ public class ProductController {
     private ProductCategoryRepository productCategoryRepository;
     private ShopRepository shopRepository;
 
+    @GetMapping("/ids")
+    public List<Product> getProductByIds(@RequestParam List<Long> ids) {
+        return productRepository.findAllByIds(ids);
+    }
+
     @GetMapping("/match")
     public List<Product> getProductsByNameAndShops(@RequestParam String value,
                                                     @RequestParam String shops) {
