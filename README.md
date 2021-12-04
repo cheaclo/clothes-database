@@ -1,6 +1,6 @@
 # Clothes Database Microservice
 
-Project is a microservice, which is part of Cheaclo project. The application is a layer supporting communication between clothes database and other microservices.
+Project is a microservice, which is part of [Cheaclo](https://github.com/cheaclo/about) project. The application is a layer supporting communication between clothes database and other microservices.
 
 ## Tech stack
 
